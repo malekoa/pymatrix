@@ -1,11 +1,10 @@
-class Matrix:
+import random
 
-    matrix = []
-    rows = 0
-    columns = 0
+class Matrix:
 
     def __init__(self, rows = 1, columns = 1):
         # Set amount of rows and columns
+        self.matrix = []
         self.rows = rows
         self.columns = columns
         # Create rows
@@ -16,25 +15,45 @@ class Matrix:
             for ii in range(columns):
                 i.append(0)
 
+    def showSelf(self):
+        for row in self.matrix:
+            print row
+
     def getSize(self):
         return (self.rows, self.columns)
 
-    def showSelf(self):
-        for i in self.matrix:
-            print i
+    def randomize(self):
+        #print random.randint(0, 9)
+        for row in range(self.rows):
+            for entry in range(self.columns):
+                self.matrix[row][entry] = random.randint(0, 9)
 
-    def addRows(self, amount = 1):
-        for i in range(amount):
-            self.matrix.append([])
+    def addMatrix(self, otherMatrix):
+        print "Adding"
+        self.showSelf()
+        print "and"
+        otherMatrix.showSelf()
+        print "Result = "
+        resultMatrix = Matrix(self.rows, self.columns)
 
-    def addEntry(self, row, column, value):
-        self.matrix[row][column] = value
+        for row in range(resultMatrix.rows):
+            for col in range(resultMatrix.columns):
+                resultMatrix.matrix[row][col] = self.matrix[row][col] + otherMatrix.matrix[row][col]
+
+        resultMatrix.showSelf()
 
 
 ### DO STUFF
 
-matrix1 = Matrix(4, 4)
+matrix1 = Matrix(3, 3)
+matrix1.randomize()
 
-matrix1.addEntry(1, 1, 2)
+asdf = Matrix(3, 3)
+asdf.randomize()
 
-matrix1.showSelf()
+# print "Matrix 1: "
+# matrix1.showSelf()
+# print "\nMatrix 2:"
+# asdf.showSelf()
+
+matrix1.addMatrix(asdf)
