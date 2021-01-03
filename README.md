@@ -1,10 +1,10 @@
 # Pymatrix
 
-## Linear algebra matrix module
+### Linear algebra matrix module
 
 For learning python, linear algebra, and git all in one go!
 
-### To do:
+#### To do:
 - [ ] Addition
 - [ ] Subtraction
 - [ ] Multiplication
