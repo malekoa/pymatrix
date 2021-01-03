@@ -5,9 +5,11 @@
 For learning python, linear algebra, and git all in one go!
 
 #### To do:
-- [ ] Addition
-- [ ] Subtraction
-- [ ] Multiplication
+- [x] Create matrix class
+- [ ] Randomize matrix entries
+- [ ] Matrix addition
+- [ ] Matrix subtraction
+- [ ] Matrix multiplication
 - [ ] Determinant
 - [ ] Minor
 - [ ] Cofactor
