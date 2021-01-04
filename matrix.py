@@ -15,24 +15,23 @@ class Matrix:
             for ii in range(columns):
                 i.append(0)
 
-    def showSelf(self):
+    def show_self(self):
         for row in self.matrix:
             print row
 
-    def getSize(self):
+    def get_size(self):
         return (self.rows, self.columns)
 
     def randomize(self):
-        #print random.randint(0, 9)
         for row in range(self.rows):
             for entry in range(self.columns):
                 self.matrix[row][entry] = random.randint(0, 9)
 
-    def addMatrix(self, otherMatrix):
+    def add_matrix(self, otherMatrix):
         print "Adding"
-        self.showSelf()
+        self.show_self()
         print "and"
-        otherMatrix.showSelf()
+        otherMatrix.show_self()
         print "Result = "
         resultMatrix = Matrix(self.rows, self.columns)
 
@@ -40,7 +39,7 @@ class Matrix:
             for col in range(resultMatrix.columns):
                 resultMatrix.matrix[row][col] = self.matrix[row][col] + otherMatrix.matrix[row][col]
 
-        resultMatrix.showSelf()
+        resultMatrix.show_self()
 
 
 ### DO STUFF
@@ -51,9 +50,4 @@ matrix1.randomize()
 asdf = Matrix(3, 3)
 asdf.randomize()
 
-# print "Matrix 1: "
-# matrix1.showSelf()
-# print "\nMatrix 2:"
-# asdf.showSelf()
-
-matrix1.addMatrix(asdf)
+matrix1.add_matrix(asdf)
