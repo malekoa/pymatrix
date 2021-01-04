@@ -31,10 +31,10 @@ matrix_instance = Matrix(3, 3, type = "zero")
 ##### .show_self
 Prints the matrix instance to console.
 
-###### .randomize()
+##### .randomize()
 Sets every entry in the matrix instance to a random integer between 0 and 9.
 
-###### .get_size()
+##### .get_size()
 Returns a tuple with the amount of rows and columns in the matrix instance.
 
 ##### .add_matrix(second_matrix)
