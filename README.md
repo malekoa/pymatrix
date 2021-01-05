@@ -14,6 +14,7 @@ For learning python, linear algebra, and git all in one go!
 - [ ] Determinant calculation
 - [ ] Minor calculation
 - [ ] Cofactor calculation
+- [ ] Transpose calculation
 
 ## Usage
 
