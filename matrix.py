@@ -2,10 +2,10 @@ import random
 
 class Matrix:
 
-    def __init__(self, rows = 1, columns = 1, type = "zero"):
+    def __init__(self, rows = 1, columns = 1, matrixType = "zero"):
         if rows < 1 or columns < 1 :
             raise Exception("Rows and columns must be greater than 0.")
-        if type == "identity" and rows != columns:
+        if matrixType == "identity" and rows != columns:
             raise Exception("Identity matrices must be square.")
         # Set amount of rows and columns
         self.matrix = []
@@ -21,7 +21,7 @@ class Matrix:
                 i.append(0)
 
         # Makes identity matrix
-        if type == "identity" and rows == columns:
+        if matrixType == "identity" and rows == columns:
             for row in range(rows):
                 for col in range(columns):
                     if row == col:
@@ -46,6 +46,36 @@ class Matrix:
         for row in range(self.rows):
             for entry in range(self.columns):
                 self.matrix[row][entry] = random.randint(0, 9)
+
+    def transpose(self):
+        self.show_self()
+        print ""
+
+        # get all columns in matrix
+        columns = []
+        for col in range(self.columns):
+            columns.append(self.getColumn(col))
+
+        # create matrix with columns and rows switched to hold the transpose
+        transposed_matrix = Matrix(self.columns, self.rows)
+
+        # loop through rows in transposed_matrix and place the columns in
+        transposed_matrix.matrix = columns
+
+        transposed_matrix.show_self()
+
+        return transposed_matrix
+
+    # pass a matrix and the column you wish to get
+    def getColumn(self, col):
+        #self.show_self()
+
+        column = []
+        for row in self.matrix:
+            column.append(row[col])
+
+        return column
+        #print column
 
     def add_matrix(self, otherMatrix):
         # if matrices aren't the same size
@@ -93,10 +123,14 @@ class Matrix:
 #
 # matrix1.add_matrix(asdf)
 
-m1 = Matrix(2, 2)
+# m1 = Matrix(3, 1)
+# m1.randomize()
+#
+# m2 = Matrix(3, 1)
+# m2.randomize()
+#
+# m1.add_matrix(m2)
+
+m1 = Matrix(5, 3)
 m1.randomize()
-
-m2 = Matrix(3, 2)
-m2.randomize()
-
-m1.add_matrix(m2)
+m1.transpose()
