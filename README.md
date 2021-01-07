@@ -55,11 +55,6 @@ matrix = Matrix(2, 2)
 matrix.show_self()
 ```
 
-```python
-matrix = Matrix(2, 2)
-matrix.show_self()
-```
-
 ##### .randomize()
 Sets every entry in the matrix instance to a random integer between 0 and 9.
 
