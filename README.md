@@ -3,28 +3,32 @@
 For learning python, linear algebra, and git all in one go!
 
 ### To do:
-- [x] Create matrix class
-    - [x] Matrix types (identity & zero)
-    - [x] Randomize matrix entries
+- **Matrix Constructor**
+    - [x] Construct zero matrix
+    - [x] Construct identity matrix
     - [ ] Create matrix with specific entries
-- [x] Matrix addition
-- [x] Matrix subtraction
-- [ ] Matrix multiplication
+- **Matrix Operations**
+  - [x] Randomize matrix entries
+  - [x] Matrix addition
+  - [x] Matrix subtraction
   - [x] Scalar multiplication
-  - [ ] Multiplication of two matrices
-- [x] Transpose operation
-- [ ] Matrix inversion
-- [ ] Determinant calculation
-- [ ] Minor calculation
-- [ ] Cofactor calculation
-- [ ] Vectors
+  - [ ] Matrix multiplication
+  - [x] Transpose operation
+  - [ ] Matrix inversion
+  - [ ] Determinant calculation
+  - [ ] Minor calculation
+  - [ ] Cofactor calculation
+- **Vector Operations**
   - [ ] Norm (length) calculation for vectors
   - [ ] Unit vectors
   - [ ] Dot product
-- [ ] **Special methods**
+- **Special methods**
   - [x] Matrix addition
   - [x] Matrix subtraction
   - [ ] Matrix multiplication
+- **Unit tests**
+  - [ ] Matrix Operations
+  - [ ] Vector Operations
 
 ## Usage
 
