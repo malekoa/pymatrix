@@ -32,7 +32,7 @@ For learning python, linear algebra, and git all in one go!
 
 ## Usage
 
-#### Creating a matrix instance using the *Matrix()* class
+### Creating a matrix instance using the *Matrix()* class
 The first parameter is rows and the second parameter is columns. The third parameter is optional and declares the type of matrix to create.
 
 ```python
@@ -49,9 +49,9 @@ new_identity_matrix_instance = Matrix(3, 4, "identity")
 
 ```
 
-#### Matrix instance methods
+### Matrix instance methods
 
-##### .show_self()
+#### .show_self()
 Prints the matrix instance to console.
 
 ```python
@@ -59,7 +59,7 @@ matrix = Matrix(2, 2)
 matrix.show_self()
 ```
 
-##### .randomize()
+#### .randomize()
 Sets every entry in the matrix instance to a random integer between 0 and 9.
 
 ```python
@@ -67,7 +67,7 @@ matrix = Matrix(3, 3)
 matrix.randomize()
 ```
 
-##### .get_size()
+#### .get_size()
 Returns a tuple with the amount of rows and columns in the matrix instance.
 
 ```python
@@ -75,7 +75,7 @@ matrix = Matrix(4, 2)
 matrix.get_size()
 ```
 
-##### .transpose()
+#### .transpose()
 Returns a matrix instance that is the transpose of the original matrix.
 
 ```python
@@ -83,7 +83,7 @@ matrix = Matrix(3, 2)
 matrix.transpose()
 ```
 
-##### .add_matrix(second_matrix)
+#### .add_matrix(second_matrix)
 Returns a matrix instance that is the sum of self with second_matrix. Raises an exception if matrices are of different sizes.
 
 ```python
@@ -108,7 +108,7 @@ matrix2.randomize()
 sum_of_matrices = matrix1 + matrix2
 ```
 
-##### .subtract_matrix(second_matrix)
+#### .subtract_matrix(second_matrix)
 Returns a matrix instance that is the difference of self with second_matrix. Raises an exception if matrices are of different sizes.
 
 ```python
@@ -132,7 +132,7 @@ matrix2.randomize()
 # matrix1 + matrix2
 difference_of_matrices = matrix1 - matrix2
 ```
-##### .scale(scalar)
+#### .scale(scalar)
 Returns the product of a matrix and a scalar.
 ```python
 # create matrices
