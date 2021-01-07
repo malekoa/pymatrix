@@ -29,6 +29,12 @@ class Matrix:
             else:
                 return None
 
+    def __add__(self, otherMatrix):
+        self.add_matrix(otherMatrix)
+
+    def __sub__(self, otherMatrix):
+        self.subtract_matrix(otherMatrix)
+
     # returns true if same size, false otherwise
     def is_same_size(self, otherMatrix):
         if self.rows == otherMatrix.rows and self.columns == otherMatrix.columns:
@@ -111,26 +117,21 @@ class Matrix:
 
         resultMatrix.show_self()
 
+    def scale(self, scalar):
+        self.show_self()
+        print "*"
+        print scalar
+        print "="
+        scaled_matrix = Matrix(self.rows, self.columns)
+        for row in range(self.rows):
+            for col in range(self.columns):
+                scaled_matrix.matrix[row][col] = self.matrix[row][col] * scalar
+        scaled_matrix.show_self()
+        return scaled_matrix
 
 
 ### DO STUFF
 
-# matrix1 = Matrix(3, 3)
-# matrix1.randomize()
-#
-# asdf = Matrix(3, 3)
-# asdf.randomize()
-#
-# matrix1.add_matrix(asdf)
-
-# m1 = Matrix(3, 1)
-# m1.randomize()
-#
-# m2 = Matrix(3, 1)
-# m2.randomize()
-#
-# m1.add_matrix(m2)
-
-m1 = Matrix(5, 3)
-m1.randomize()
-m1.transpose()
+matrix = Matrix(2, 2)
+matrix.randomize()
+matrix.scale(1.0/3.0)

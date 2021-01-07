@@ -1,10 +1,8 @@
 # Pymatrix
 
-### Linear algebra matrix module
-
 For learning python, linear algebra, and git all in one go!
 
-#### To do:
+### To do:
 - [x] Create matrix class
     - [x] Matrix types (identity & zero)
     - [x] Randomize matrix entries
@@ -12,11 +10,21 @@ For learning python, linear algebra, and git all in one go!
 - [x] Matrix addition
 - [x] Matrix subtraction
 - [ ] Matrix multiplication
-  - [ ] Scalar multiplication
+  - [x] Scalar multiplication
+  - [ ] Multiplication of two matrices
 - [x] Transpose operation
+- [ ] Matrix inversion
 - [ ] Determinant calculation
 - [ ] Minor calculation
 - [ ] Cofactor calculation
+- [ ] Vectors
+  - [ ] Norm (length) calculation for vectors
+  - [ ] Unit vectors
+  - [ ] Dot product
+- [ ] **Special methods**
+  - [x] Matrix addition
+  - [x] Matrix subtraction
+  - [ ] Matrix multiplication
 
 ## Usage
 
@@ -42,17 +50,95 @@ new_identity_matrix_instance = Matrix(3, 4, "identity")
 ##### .show_self()
 Prints the matrix instance to console.
 
+```python
+matrix = Matrix(2, 2)
+matrix.show_self()
+```
+
+```python
+matrix = Matrix(2, 2)
+matrix.show_self()
+```
+
 ##### .randomize()
 Sets every entry in the matrix instance to a random integer between 0 and 9.
+
+```python
+matrix = Matrix(3, 3)
+matrix.randomize()
+```
 
 ##### .get_size()
 Returns a tuple with the amount of rows and columns in the matrix instance.
 
+```python
+matrix = Matrix(4, 2)
+matrix.get_size()
+```
+
 ##### .transpose()
 Returns a matrix instance that is the transpose of the original matrix.
+
+```python
+matrix = Matrix(3, 2)
+matrix.transpose()
+```
 
 ##### .add_matrix(second_matrix)
 Returns a matrix instance that is the sum of self with second_matrix. Raises an exception if matrices are of different sizes.
 
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+matrix2 = Matrix(2, 2)
+matrix2.randomize()
+# matrix1 + matrix2
+sum_of_matrices = matrix1.add_matrix(matrix2)
+```
+
+The addition operator ``+`` can also be used.
+
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+matrix2 = Matrix(2, 2)
+matrix2.randomize()
+# matrix1 + matrix2
+sum_of_matrices = matrix1 + matrix2
+```
+
 ##### .subtract_matrix(second_matrix)
 Returns a matrix instance that is the difference of self with second_matrix. Raises an exception if matrices are of different sizes.
+
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+matrix2 = Matrix(2, 2)
+matrix2.randomize()
+# matrix1 - matrix2
+difference_of_matrices = matrix1.subtract_matrix(matrix2)
+```
+
+The subtraction operator ``-`` can also be used.
+
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+matrix2 = Matrix(2, 2)
+matrix2.randomize()
+# matrix1 + matrix2
+difference_of_matrices = matrix1 - matrix2
+```
+##### .scale(scalar)
+Returns the product of a matrix and a scalar.
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+# scale the matrix by 2
+scaled_matrix = matrix1.scale(2)
+```
