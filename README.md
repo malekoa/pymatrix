@@ -7,12 +7,13 @@ For learning python, linear algebra, and git all in one go!
     - [x] Construct zero matrix
     - [x] Construct identity matrix
     - [ ] Create matrix with specific entries
+      - [x] Set specific entry
 - **Matrix Operations**
   - [x] Randomize matrix entries
   - [x] Matrix addition
   - [x] Matrix subtraction
   - [x] Scalar multiplication
-  - [ ] Matrix multiplication
+  - [x] Matrix multiplication
   - [x] Transpose operation
   - [ ] Matrix inversion
   - [ ] Determinant calculation
@@ -25,7 +26,7 @@ For learning python, linear algebra, and git all in one go!
 - **Special methods**
   - [x] Matrix addition
   - [x] Matrix subtraction
-  - [ ] Matrix multiplication
+  - [x] Matrix multiplication
 - **Unit tests**
   - [ ] Matrix Operations
   - [ ] Vector Operations
@@ -65,6 +66,16 @@ Sets every entry in the matrix instance to a random integer between 0 and 9.
 ```python
 matrix = Matrix(3, 3)
 matrix.randomize()
+```
+
+#### .set_entry()
+Sets a specified entry in the matrix to the given number. First parameter is a tuple containing the position of the entry to be changed. Second parameter is the value you want to change that entry to.
+
+```python
+# create matrix
+matrix = Matrix(3, 3)
+# set entry on row 0, column 0 to 10
+matrix.set_entry((0, 0), 10)
 ```
 
 #### .get_size()
@@ -129,9 +140,35 @@ matrix1 = Matrix(2, 2)
 matrix1.randomize()
 matrix2 = Matrix(2, 2)
 matrix2.randomize()
-# matrix1 + matrix2
+# matrix1 - matrix2
 difference_of_matrices = matrix1 - matrix2
 ```
+
+#### .multiply_matrix(second_matrix)
+Returns a matrix instance that is the difference of self with second_matrix. Raises an exception if matrices are of different sizes.
+
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+matrix2 = Matrix(2, 2)
+matrix2.randomize()
+# matrix1 * matrix2
+product_of_matrices = matrix1.multiply_matrix(matrix2)
+```
+
+The multiplication operator ``*`` can also be used.
+
+```python
+# create matrices
+matrix1 = Matrix(2, 2)
+matrix1.randomize()
+matrix2 = Matrix(2, 2)
+matrix2.randomize()
+# matrix1 * matrix2
+product_of_matrices = matrix1 * matrix2
+```
+
 #### .scale(scalar)
 Returns the product of a matrix and a scalar.
 ```python

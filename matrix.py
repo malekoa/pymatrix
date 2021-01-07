@@ -35,6 +35,10 @@ class Matrix:
     def __sub__(self, otherMatrix):
         self.subtract_matrix(otherMatrix)
 
+    def __mul__(self, otherMatrix):
+        #self.multiply_matrix(otherMatrix)
+        return self.multiply_matrix(otherMatrix)
+
     # returns true if same size, false otherwise
     def is_same_size(self, otherMatrix):
         if self.rows == otherMatrix.rows and self.columns == otherMatrix.columns:
@@ -129,9 +133,41 @@ class Matrix:
         scaled_matrix.show_self()
         return scaled_matrix
 
+    def set_entry(self, entry_position, new_entry):
+        row, col = entry_position
+        #self.show_self()
+        self.matrix[row][col] = new_entry
+        #self.show_self()
 
+
+    # returns the result of self matrix * otherMatrix
+    def multiply_matrix(self, otherMatrix):
+        resultMatrix = Matrix(self.rows, otherMatrix.columns)
+
+        for row in range(self.rows):
+            sum = 0
+            for col in range(otherMatrix.columns):
+                sum = 0
+                for entry in range(len(self.matrix[row])):
+                    product = self.matrix[row][entry] * otherMatrix.getColumn(col)[entry]
+                    sum += product
+
+                resultMatrix.set_entry((row, col), sum)
+
+        return resultMatrix
+
+
+# m1.set_entry((0, 0), 10)
 ### DO STUFF
 
-matrix = Matrix(2, 2)
-matrix.randomize()
-matrix.scale(1.0/3.0)
+m1 = Matrix(2, 2)
+m2 = Matrix(2, 2)
+m1.randomize()
+m2.randomize()
+
+m1.show_self()
+print "\n*\n"
+m2.show_self()
+print "\n=\n"
+new = m1 * m2
+new.show_self()
