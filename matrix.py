@@ -30,13 +30,12 @@ class Matrix:
                 return None
 
     def __add__(self, otherMatrix):
-        self.add_matrix(otherMatrix)
+        return self.add_matrix(otherMatrix)
 
     def __sub__(self, otherMatrix):
-        self.subtract_matrix(otherMatrix)
+        return self.subtract_matrix(otherMatrix)
 
     def __mul__(self, otherMatrix):
-        #self.multiply_matrix(otherMatrix)
         return self.multiply_matrix(otherMatrix)
 
     # returns true if same size, false otherwise
@@ -45,107 +44,91 @@ class Matrix:
             return True
         return False
 
+    # prints the matrix instance to the console
     def show_self(self):
         for row in self.matrix:
             print row
 
+    # returns a tuple that contains the size of the matrix instance (rows, columns)
     def get_size(self):
         return (self.rows, self.columns)
 
+    # sets all entries in a matrix instance to a random int between 0 and 9
     def randomize(self):
         for row in range(self.rows):
             for entry in range(self.columns):
                 self.matrix[row][entry] = random.randint(0, 9)
 
+    # returns a matrix instance that is the transpose of the given matrix
     def transpose(self):
-        self.show_self()
-        print ""
-
         # get all columns in matrix
         columns = []
         for col in range(self.columns):
             columns.append(self.getColumn(col))
 
-        # create matrix with columns and rows switched to hold the transpose
+        # transposed matrix has rows and columns switched
         transposed_matrix = Matrix(self.columns, self.rows)
-
         # loop through rows in transposed_matrix and place the columns in
         transposed_matrix.matrix = columns
-
-        transposed_matrix.show_self()
+        #transposed_matrix.show_self()
 
         return transposed_matrix
 
-    # pass a matrix and the column you wish to get
+    # returns the specified column of a matrix
     def getColumn(self, col):
-        #self.show_self()
-
         column = []
         for row in self.matrix:
             column.append(row[col])
 
         return column
-        #print column
 
+    # returns a matrix instance that is the sum of two matrix instances
     def add_matrix(self, otherMatrix):
-        # if matrices aren't the same size
         if(self.is_same_size(otherMatrix) == False):
             raise Exception("Matrices must be of the same size for addition.")
 
-        self.show_self()
-        print "+"
-        otherMatrix.show_self()
-        print "="
         resultMatrix = Matrix(self.rows, self.columns)
 
         for row in range(resultMatrix.rows):
             for col in range(resultMatrix.columns):
                 resultMatrix.matrix[row][col] = self.matrix[row][col] + otherMatrix.matrix[row][col]
 
-        resultMatrix.show_self()
+        return resultMatrix
 
+    # returns a matrix instance that is the difference of two matrix instances
     def subtract_matrix(self, otherMatrix):
-        # if matrices aren't the same size
         if(self.is_same_size(otherMatrix) == False):
             raise Exception("Matrices must be of the same size for subtraction.")
 
-        self.show_self()
-        print "-"
-        otherMatrix.show_self()
-        print "="
         resultMatrix = Matrix(self.rows, self.columns)
 
         for row in range(resultMatrix.rows):
             for col in range(resultMatrix.columns):
                 resultMatrix.matrix[row][col] = self.matrix[row][col] - otherMatrix.matrix[row][col]
 
-        resultMatrix.show_self()
+        return resultMatrix
 
+    # returns a matrix instance that is a scaled to a scalar
     def scale(self, scalar):
-        self.show_self()
-        print "*"
-        print scalar
-        print "="
         scaled_matrix = Matrix(self.rows, self.columns)
+
         for row in range(self.rows):
             for col in range(self.columns):
                 scaled_matrix.matrix[row][col] = self.matrix[row][col] * scalar
-        scaled_matrix.show_self()
+
         return scaled_matrix
 
+    # sets a specific entry in a matrix instance to new_entry. takes a tuple for
+    # entry_position
     def set_entry(self, entry_position, new_entry):
         row, col = entry_position
-        #self.show_self()
         self.matrix[row][col] = new_entry
-        #self.show_self()
 
-
-    # returns the result of self matrix * otherMatrix
+    # returns a matrix instance that is the product of two matrices
     def multiply_matrix(self, otherMatrix):
         resultMatrix = Matrix(self.rows, otherMatrix.columns)
 
         for row in range(self.rows):
-            sum = 0
             for col in range(otherMatrix.columns):
                 sum = 0
                 for entry in range(len(self.matrix[row])):
@@ -160,14 +143,11 @@ class Matrix:
 # m1.set_entry((0, 0), 10)
 ### DO STUFF
 
-m1 = Matrix(2, 2)
-m2 = Matrix(2, 2)
+m1 = Matrix(3, 4)
 m1.randomize()
-m2.randomize()
 
 m1.show_self()
-print "\n*\n"
-m2.show_self()
-print "\n=\n"
-new = m1 * m2
-new.show_self()
+print "transposed ="
+
+transposed = m1.transpose()
+transposed.show_self()
