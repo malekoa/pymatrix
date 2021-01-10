@@ -53,6 +53,8 @@ class Matrix:
     def get_size(self):
         return (self.rows, self.columns)
 
+    ### REMEMBER TO CHANGE BACK TO 0!!!!!!!!
+
     # sets all entries in a matrix instance to a random int between 0 and 9
     def randomize(self):
         for row in range(self.rows):
@@ -124,6 +126,10 @@ class Matrix:
         row, col = entry_position
         self.matrix[row][col] = new_entry
 
+    def get_entry(self, entry_position):
+        row, column = entry_position
+        return self.matrix[row][column]
+
     # returns a matrix instance that is the product of two matrices
     def multiply_matrix(self, otherMatrix):
         resultMatrix = Matrix(self.rows, otherMatrix.columns)
@@ -139,15 +145,62 @@ class Matrix:
 
         return resultMatrix
 
+    # switches the positions of row1 and row2 in a matrix instance
+    def switch_row(self, row1, row2):
+        r1 = self.matrix[row1]
+        r2 = self.matrix[row2]
+        self.matrix[row1] = r2
+        self.matrix[row2] = r1
 
-# m1.set_entry((0, 0), 10)
-### DO STUFF
 
-m1 = Matrix(3, 4)
+    def fetch_minor_matrix(self, position):
+        r, c = position
+
+        #print "position: " + str(position)
+        values = []
+
+        # get values from self.matrix that aren't in the row or column given in position
+        for row in range(self.rows):
+            for col in range(self.columns):
+                if row != r and col != c:
+                    values.append(self.matrix[row][col])
+
+        # create minor matrix and fill with values
+        minor = Matrix(self.rows - 1, self.columns - 1)
+        pos = 0
+        for row in range(minor.rows):
+            for col in range(minor.columns):
+                minor.matrix[row][col] = values[pos]
+                pos += 1
+
+        #minor.show_self()
+        return minor.determinant()
+
+
+    # returns the determinant of the matrix instance
+    def determinant(self):
+        rows, cols = self.get_size()
+        if rows == 2 and rows == cols:
+            return self.matrix[0][0] * self.matrix[1][1] - self.matrix[0][1] * self.matrix[1][0]
+
+        result = 0
+        if rows >= 3 and rows == cols:
+            for row in range(self.rows):
+                det = self.fetch_minor_matrix((row, 0))
+                #print "determinant: " +  str(det)
+                if row % 2 == 0:
+                    result += self.matrix[row][0] * det
+                else:
+                    result += -1 * (self.matrix[row][0] * det)
+
+        return result
+
+### TG
+
+m1 = Matrix(3, 3)
 m1.randomize()
 
 m1.show_self()
-print "transposed ="
-
-transposed = m1.transpose()
-transposed.show_self()
+print "\n---\n"
+det = m1.determinant()
+print "determinant: " + str(det)
