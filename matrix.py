@@ -1,4 +1,5 @@
 import random
+import datetime
 
 class Matrix:
 
@@ -155,8 +156,6 @@ class Matrix:
 
     def fetch_minor_matrix(self, position):
         r, c = position
-
-        #print "position: " + str(position)
         values = []
 
         # get values from self.matrix that aren't in the row or column given in position
@@ -173,7 +172,6 @@ class Matrix:
                 minor.matrix[row][col] = values[pos]
                 pos += 1
 
-        #minor.show_self()
         return minor.determinant()
 
 
@@ -187,7 +185,6 @@ class Matrix:
         if rows >= 3 and rows == cols:
             for row in range(self.rows):
                 det = self.fetch_minor_matrix((row, 0))
-                #print "determinant: " +  str(det)
                 if row % 2 == 0:
                     result += self.matrix[row][0] * det
                 else:
@@ -197,10 +194,14 @@ class Matrix:
 
 ### TG
 
-m1 = Matrix(3, 3)
+m1 = Matrix(5, 5)
 m1.randomize()
 
 m1.show_self()
 print "\n---\n"
+start = datetime.datetime.now()
 det = m1.determinant()
+end = datetime.datetime.now()
+time = end - start
 print "determinant: " + str(det)
+print "time elapsed (ms): " + str(time.total_seconds() * 1000)

@@ -16,8 +16,7 @@ For learning python, linear algebra, and git all in one go!
   - [x] Matrix multiplication
   - [x] Transpose operation
   - [ ] Matrix inversion
-  - [ ] Determinant calculation
-  - [ ] Minor calculation
+  - [x] Determinant calculation
   - [ ] Cofactor calculation
 - **Vector Operations**
   - [ ] Norm (length) calculation for vectors
@@ -172,9 +171,23 @@ product_of_matrices = matrix1 * matrix2
 #### .scale(scalar)
 Returns the product of a matrix and a scalar.
 ```python
-# create matrices
+# create matrix
 matrix1 = Matrix(2, 2)
 matrix1.randomize()
 # scale the matrix by 2
 scaled_matrix = matrix1.scale(2)
 ```
+
+#### .determinant()
+Returns the determinant of the matrix using cofactor expansion. Complexity is O(n!) so it gets very slow very quickly as the matrix grows. 
+
+```python
+# create matrix
+matrix1 = Matrix(4, 4)
+matrix1.randomize()
+# calculate the determinant
+determinant_of_matrix1 = matrix1.determinant()
+```
+
+#### .fetch_minor_matrix()
+Helper function for *.determinant()*. Fetches the minor matrices of the original matrix and returns their determinants.
