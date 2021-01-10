@@ -16,6 +16,7 @@ For learning python, linear algebra, and git all in one go!
   - [x] Matrix multiplication
   - [x] Transpose operation
   - [ ] Matrix inversion
+  - [x] Adjoint calculation
   - [x] Determinant calculation
   - [ ] Cofactor calculation
 - **Vector Operations**
@@ -86,7 +87,7 @@ matrix.get_size()
 ```
 
 #### .transpose()
-Returns a matrix instance that is the transpose of the original matrix.
+Returns a matrix instance that is the transpose of the original matrix. Used as a helper function by *.get_adjoint_matrix()*
 
 ```python
 matrix = Matrix(3, 2)
@@ -179,7 +180,7 @@ scaled_matrix = matrix1.scale(2)
 ```
 
 #### .determinant()
-Returns the determinant of the matrix using cofactor expansion. Complexity is O(n!) so it gets very slow very quickly as the matrix grows. 
+Returns the determinant of the matrix using cofactor expansion. Complexity is O(n!) so it gets very slow very quickly as the matrix grows. Uses *.fetch_minor_matrix()* as a helper function.
 
 ```python
 # create matrix
@@ -190,4 +191,15 @@ determinant_of_matrix1 = matrix1.determinant()
 ```
 
 #### .fetch_minor_matrix()
-Helper function for *.determinant()*. Fetches the minor matrices of the original matrix and returns their determinants.
+Helper function for *.determinant()* and *.get_adjoint_matrix()*. Fetches the minor matrices of the original matrix and returns their determinants.
+
+#### .get_adjoint_matrix()
+Returns the adjoint of the matrix. Uses *.fetch_minor_matrix()* and *.transpose()* as helper functions.
+
+```python
+# create matrix
+matrix1 = Matrix(4, 4)
+matrix1.randomize()
+# calculate the determinant
+determinant_of_matrix1 = matrix1.determinant()
+```

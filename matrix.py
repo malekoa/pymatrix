@@ -154,6 +154,8 @@ class Matrix:
         self.matrix[row2] = r1
 
 
+    # Takes a tuple (rows, columns) for position. Returns the determinant of
+    # the minor matrix of a position
     def fetch_minor_matrix(self, position):
         r, c = position
         values = []
@@ -192,16 +194,42 @@ class Matrix:
 
         return result
 
+    # returns the adjugate matrix
+    def get_adjoint_matrix(self):
+        t1 = self
+        # put determinant of all of t1's minor matrices in adj
+        adj = Matrix(self.rows, self.columns)
+        for row in range(m1.rows):
+            for col in range(m1.columns):
+                # if both row and col are even, number is unmodified before input
+                if row % 2 == 0 and col % 2 == 0:
+                    adj.matrix[row][col] = m1.fetch_minor_matrix((row, col))
+                # if both row and col are odd, number is unmodified before input
+                elif row % 2 != 0 and col % 2 != 0:
+                    adj.matrix[row][col] = m1.fetch_minor_matrix((row, col))
+                # if row and col aren't both even or odd, number is multiplied by -1 before input
+                else:
+                    adj.matrix[row][col] = m1.fetch_minor_matrix((row, col)) * -1
+
+        adj = adj.transpose()
+
+        return adj
+
+
 ### TG
 
-m1 = Matrix(5, 5)
+m1 = Matrix(4, 4)
 m1.randomize()
-
+print "Matrix:\n"
 m1.show_self()
-print "\n---\n"
-start = datetime.datetime.now()
-det = m1.determinant()
-end = datetime.datetime.now()
-time = end - start
-print "determinant: " + str(det)
-print "time elapsed (ms): " + str(time.total_seconds() * 1000)
+adj = m1.get_adjoint_matrix()
+print "\nAdjoint:\n"
+adj.show_self()
+
+
+# start = datetime.datetime.now()
+# det = m1.determinant()
+# end = datetime.datetime.now()
+# time = end - start
+# print "determinant: " + str(det)
+# print "time elapsed (ms): " + str(time.total_seconds() * 1000)
