@@ -1,5 +1,6 @@
 import random
 import datetime
+from fractions import Fraction as frac
 
 class Matrix:
 
@@ -47,8 +48,13 @@ class Matrix:
 
     # prints the matrix instance to the console
     def show_self(self):
-        for row in self.matrix:
+        strmat = Matrix(self.rows, self.columns)
+        for row in range(self.rows):
+            for col in range(self.columns):
+                strmat.matrix[row][col] = str(self.matrix[row][col])
+        for row in strmat.matrix:
             print row
+
 
     # returns a tuple that contains the size of the matrix instance (rows, columns)
     def get_size(self):
@@ -215,16 +221,54 @@ class Matrix:
 
         return adj
 
+    # returns the inverse of a matrix. Returns false if there is no inverse
+    def inverse(self):
+        adj = self.get_adjoint_matrix()
+        det = self.determinant()
+        if det != 0:
+            if adj.get_size() != (2, 2):
+                scalar = frac(1, det)
+                # convert all numbers in adj to fractions
+                for row in range(adj.rows):
+                    for col in range(adj.columns):
+                        adj.matrix[row][col] = frac(adj.matrix[row][col])
+                # scale adj to scalar
+                inv = adj.scale(scalar)
+                return inv
+            else:
+                scalar = frac(1, det)
+                # switch (0, 0) and (1, 1), multiply (0, 1) and (1, 0) by -1
+                adj = self
+                values = []
+                for row in range(adj.rows):
+                    for col in range(adj.columns):
+                        values.append(adj.matrix[row][col])
+                adj.matrix[0][0] = values[3]
+                adj.matrix[0][1] = values[1] * -1
+                adj.matrix[1][0] = values[2] * -1
+                adj.matrix[1][1] = values[0]
+                # convert all numbers in adj to fractions
+                for row in range(adj.rows):
+                    for col in range(adj.columns):
+                        adj.matrix[row][col] = frac(adj.matrix[row][col])
+                # scale adj to scalar
+                inv = adj.scale(scalar)
+                return inv
+
+        else:
+            return False
+
+
 
 ### TG
 
-m1 = Matrix(4, 4)
+m1 = Matrix(2, 2)
 m1.randomize()
 print "Matrix:\n"
 m1.show_self()
-adj = m1.get_adjoint_matrix()
-print "\nAdjoint:\n"
-adj.show_self()
+print "\nInverse:\n"
+inv = m1.inverse()
+inv.show_self()
 
 
 # start = datetime.datetime.now()

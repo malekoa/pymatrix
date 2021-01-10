@@ -15,10 +15,9 @@ For learning python, linear algebra, and git all in one go!
   - [x] Scalar multiplication
   - [x] Matrix multiplication
   - [x] Transpose operation
-  - [ ] Matrix inversion
+  - [x] Matrix inversion
   - [x] Adjoint calculation
   - [x] Determinant calculation
-  - [ ] Cofactor calculation
 - **Vector Operations**
   - [ ] Norm (length) calculation for vectors
   - [ ] Unit vectors
@@ -200,6 +199,17 @@ Returns the adjoint of the matrix. Uses *.fetch_minor_matrix()* and *.transpose(
 # create matrix
 matrix1 = Matrix(4, 4)
 matrix1.randomize()
-# calculate the determinant
-determinant_of_matrix1 = matrix1.determinant()
+# calculate the adjoint
+adjoint_of_matrix1 = matrix1.get_adjoint_matrix()
+```
+
+#### .inverse()
+Returns the inverse of the matrix if its determinant is nonzero. Else, it returns False. Uses *.determinant()*, *.get_adjoint_matrix()* and *.scale()* as helper functions. Calls *.determinant()* many times so gets very slow very quickly as the matrix grows.
+
+```python
+# create matrix
+matrix1 = Matrix(4, 4)
+matrix1.randomize()
+# calculate the inverse
+inverse_of_matrix1 = matrix1.inverse()
 ```
