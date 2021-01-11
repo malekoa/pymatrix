@@ -204,7 +204,7 @@ adjoint_of_matrix1 = matrix1.get_adjoint_matrix()
 ```
 
 #### .inverse()
-Returns the inverse of the matrix if its determinant is nonzero. Else, it returns False. Uses *.determinant()*, *.get_adjoint_matrix()* and *.scale()* as helper functions. Calls *.determinant()* many times so gets very slow very quickly as the matrix grows.
+Returns a matrix instance that is the inverse of the original matrix if its determinant is nonzero. Else, it returns False. Uses *.determinant()*, *.get_adjoint_matrix()* and *.scale()* as helper functions. Calls *.determinant()* many times so gets very slow very quickly as the matrix grows.
 
 ```python
 # create matrix

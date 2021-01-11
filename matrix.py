@@ -66,7 +66,7 @@ class Matrix:
     def randomize(self):
         for row in range(self.rows):
             for entry in range(self.columns):
-                self.matrix[row][entry] = random.randint(0, 9)
+                self.matrix[row][entry] = random.randint(1, 9)
 
     # returns a matrix instance that is the transpose of the given matrix
     def transpose(self):
@@ -151,13 +151,6 @@ class Matrix:
                 resultMatrix.set_entry((row, col), sum)
 
         return resultMatrix
-
-    # switches the positions of row1 and row2 in a matrix instance
-    def switch_row(self, row1, row2):
-        r1 = self.matrix[row1]
-        r2 = self.matrix[row2]
-        self.matrix[row1] = r2
-        self.matrix[row2] = r1
 
 
     # Takes a tuple (rows, columns) for position. Returns the determinant of
@@ -258,17 +251,88 @@ class Matrix:
         else:
             return False
 
+    # converts all entries in matrix to fractions
+    def convert_to_fractions(self):
+        for row in range(self.rows):
+            for col in range(self.columns):
+                self.matrix[row][col] = frac(self.matrix[row][col])
+        return self
+
+    # switches the positions of row1 and row2 in a matrix instance
+    def switch_row(self, row1, row2):
+        r1 = self.matrix[row1]
+        r2 = self.matrix[row2]
+        self.matrix[row1] = r2
+        self.matrix[row2] = r1
+
+    # takes the given row 'row_pos' and subtracts it from all the rows underneath
+    # it in a matrix instance
+    def subtract_down_from_row(self, row_pos):
+        m = self
+        #print self.matrix[row_pos]
+        for row in range(row_pos + 1, self.rows):
+            for entry in range(self.columns):
+                m.matrix[row][entry] = m.matrix[row][entry] - m.matrix[row_pos][entry]
+        return m
+
+    # factors out the column value of a row in a matrix instance. Returns a tuple with
+    # the factored matrix and the factor
+    def factor_row(self, row_pos, col_pos):
+        factored_matrix = self.convert_to_fractions()
+        factor = self.matrix[row_pos][col_pos]
+        print "factor: " + str(factor)
+        for entry in range(self.columns):
+            if factor != 0:
+                factored_matrix.matrix[row_pos][entry] = factored_matrix.matrix[row_pos][entry] / factor
+            else:
+                # find row with a nonzero entry where we are and add that row to the working row
+                pass
+                factored_matrix.matrix[row_pos][entry] = factored_matrix.matrix[row_pos][entry] / factor
+
+        return (factored_matrix, factor)
+
+    # uses factor_row() to factor out the entries of a whole column below the row = to column
+    def factor_column(self, col):
+        factored_column_matrix = self
+        factor = 1
+        for row in range(col, self.rows):
+            factor *= factored_column_matrix.matrix[row][col]
+            factored_column_matrix, _ = factored_column_matrix.factor_row(row, col)
+
+        return (factored_column_matrix, factor)
+
+    def determinant_row_reduction(self):
+        echelon_matrix = self
+        multiplier = 1
+
+        for col in range(echelon_matrix.columns):
+            echelon_matrix, factor = echelon_matrix.factor_column(col)
+            multiplier *= factor
+            echelon_matrix = echelon_matrix.subtract_down_from_row(col)
+
+        print "\nDeterminant: " + str(multiplier)
+        echelon_matrix.show_self()
 
 
 ### TG
 
-m1 = Matrix(2, 2)
+m1 = Matrix(3, 3)
 m1.randomize()
 print "Matrix:\n"
 m1.show_self()
-print "\nInverse:\n"
-inv = m1.inverse()
-inv.show_self()
+print "\nDeterminant:\n"
+print m1.determinant()
+print "\n---\n"
+m1.determinant_row_reduction()
+
+
+print "\n"
+
+
+# factored_matrix, factor = m1.factor_row(1, 1)
+# factored_matrix.show_self()
+# print "factor: " + str(factor)
+
 
 
 # start = datetime.datetime.now()
