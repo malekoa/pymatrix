@@ -280,7 +280,7 @@ class Matrix:
     def factor_row(self, row_pos, col_pos):
         factored_matrix = self.convert_to_fractions()
         factor = self.matrix[row_pos][col_pos]
-        print "factor: " + str(factor)
+        #print "factor: " + str(factor)
         for entry in range(self.columns):
             if factor != 0:
                 factored_matrix.matrix[row_pos][entry] = factored_matrix.matrix[row_pos][entry] / factor
@@ -311,33 +311,29 @@ class Matrix:
             echelon_matrix = echelon_matrix.subtract_down_from_row(col)
 
         print "\nDeterminant: " + str(multiplier)
-        echelon_matrix.show_self()
+        #echelon_matrix.show_self()
 
 
-### TG
+####################################################################################
+ROWS = 3
+COLS = ROWS
+CYCLES = 1000
+PERC = CYCLES / 10
 
-m1 = Matrix(3, 3)
-m1.randomize()
-print "Matrix:\n"
-m1.show_self()
-print "\nDeterminant:\n"
-print m1.determinant()
-print "\n---\n"
-m1.determinant_row_reduction()
+print "Start"
 
+time = 0
+perc = 0
+for i in range(CYCLES):
+    m1 = Matrix(ROWS, COLS)
+    m1.randomize()
+    start = datetime.datetime.now()
+    det = m1.determinant()
+    end = datetime.datetime.now()
+    time = time + (end - start).total_seconds() * 1000
+    if i % PERC == 0:
+        print str(i/PERC) + "%"
 
-print "\n"
-
-
-# factored_matrix, factor = m1.factor_row(1, 1)
-# factored_matrix.show_self()
-# print "factor: " + str(factor)
-
-
-
-# start = datetime.datetime.now()
-# det = m1.determinant()
-# end = datetime.datetime.now()
-# time = end - start
-# print "determinant: " + str(det)
-# print "time elapsed (ms): " + str(time.total_seconds() * 1000)
+print "Total time: " + str(time)
+print "Average runtime: " + str(time/CYCLES)
+print "End"
