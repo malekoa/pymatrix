@@ -1,0 +1,25 @@
+{
+  "name": "pymatrix_gh_pages",
+  "version": "1.0.0",
+  "description": "Github Pages website for pymatrix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mazadegan/pymatrix.git"
+  },
+  "author": "mazadegan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mazadegan/pymatrix/issues"
+  },
+  "homepage": "https://github.com/mazadegan/pymatrix#readme",
+  "dependencies": {
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "webpack": "^5.21.1"
+  }
+}
