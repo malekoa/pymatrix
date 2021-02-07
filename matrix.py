@@ -1,343 +1,131 @@
 import random
-import datetime
-from fractions import Fraction as frac
+from fractions import Fraction
 
 class Matrix:
-
-    def __init__(self, rows = 1, columns = 1, matrixType = "zero"):
-        if rows < 1 or columns < 1 :
-            raise Exception("Rows and columns must be greater than 0.")
-        if matrixType == "identity" and rows != columns:
-            raise Exception("Identity matrices must be square.")
-        # Set amount of rows and columns
-        self.matrix = []
+    # initializes a zero matrix
+    def __init__(self, rows = 1, columns = 1):
+        self.data = []
         self.rows = rows
         self.columns = columns
-        # Create rows
-        for i in range(rows):
-            self.matrix.append([])
 
-        # Makes zero matrix
-        for i in self.matrix:
-            for ii in range(columns):
-                i.append(0)
-
-        # Makes identity matrix
-        if matrixType == "identity" and rows == columns:
-            for row in range(rows):
-                for col in range(columns):
-                    if row == col:
-                        self.matrix[row][col] = 1
-            else:
-                return None
-
-    def __add__(self, otherMatrix):
-        return self.add_matrix(otherMatrix)
-
-    def __sub__(self, otherMatrix):
-        return self.subtract_matrix(otherMatrix)
-
-    def __mul__(self, otherMatrix):
-        return self.multiply_matrix(otherMatrix)
-
-    # returns true if same size, false otherwise
-    def is_same_size(self, otherMatrix):
-        if self.rows == otherMatrix.rows and self.columns == otherMatrix.columns:
-            return True
-        return False
-
-    # prints the matrix instance to the console
-    def show_self(self):
-        strmat = Matrix(self.rows, self.columns)
         for row in range(self.rows):
-            for col in range(self.columns):
-                strmat.matrix[row][col] = str(self.matrix[row][col])
-        for row in strmat.matrix:
-            print row
+            self.data.append([])
+            for _ in range(self.columns):
+                self.data[row].append(Fraction(0, 1))
 
+    # prints the matrix to the console. Converts each fraction to a string representation when needed
+    def show_self(self):
+        string_matrix = Matrix(self.rows, self.columns)
+        for row in range(string_matrix.rows):
+            for col in range(string_matrix.columns):
+                if self.data[row][col].as_integer_ratio()[1] == 1:
+                    # if denominator == 1, returns only the numerator
+                    string_matrix.data[row][col] = self.data[row][col].as_integer_ratio()[0]
+                else:
+                    # if denominator != 1, returns a string "numerator/denominator"
+                    string_matrix.data[row][col] = str(self.data[row][col].as_integer_ratio()[0]) + "/" + \
+                                                   str(self.data[row][col].as_integer_ratio()[1])
+        # prints the rows
+        for row in range(string_matrix.rows):
+            print(string_matrix.data[row])
 
-    # returns a tuple that contains the size of the matrix instance (rows, columns)
-    def get_size(self):
-        return (self.rows, self.columns)
-
-    ### REMEMBER TO CHANGE BACK TO 0!!!!!!!!
-
-    # sets all entries in a matrix instance to a random int between 0 and 9
+    # sets all entries in the matrix to a random integer
     def randomize(self):
         for row in range(self.rows):
-            for entry in range(self.columns):
-                self.matrix[row][entry] = random.randint(1, 9)
+            for col in range(self.columns):
+                self.data[row][col] = Fraction(random.randint(1, 9), 1)
 
-    # returns a matrix instance that is the transpose of the given matrix
-    def transpose(self):
-        # get all columns in matrix
-        columns = []
-        for col in range(self.columns):
-            columns.append(self.getColumn(col))
-
-        # transposed matrix has rows and columns switched
-        transposed_matrix = Matrix(self.columns, self.rows)
-        # loop through rows in transposed_matrix and place the columns in
-        transposed_matrix.matrix = columns
-        #transposed_matrix.show_self()
-
-        return transposed_matrix
-
-    # returns the specified column of a matrix
-    def getColumn(self, col):
+    # returns the specified column in a matrix
+    def get_column(self, col):
         column = []
-        for row in self.matrix:
+        for row in self.data:
             column.append(row[col])
-
         return column
 
-    # returns a matrix instance that is the sum of two matrix instances
-    def add_matrix(self, otherMatrix):
-        if(self.is_same_size(otherMatrix) == False):
-            raise Exception("Matrices must be of the same size for addition.")
+    # returns a Matrix that is the transpose of self
+    def transpose(self):
+        columns = []
+        for col in range(self.columns):
+            columns.append(self.get_column(col))
+        transposed_matrix = Matrix(self.columns, self.rows)
+        transposed_matrix.data = columns
+        return transposed_matrix
 
-        resultMatrix = Matrix(self.rows, self.columns)
-
-        for row in range(resultMatrix.rows):
-            for col in range(resultMatrix.columns):
-                resultMatrix.matrix[row][col] = self.matrix[row][col] + otherMatrix.matrix[row][col]
-
-        return resultMatrix
-
-    # returns a matrix instance that is the difference of two matrix instances
-    def subtract_matrix(self, otherMatrix):
-        if(self.is_same_size(otherMatrix) == False):
-            raise Exception("Matrices must be of the same size for subtraction.")
-
-        resultMatrix = Matrix(self.rows, self.columns)
-
-        for row in range(resultMatrix.rows):
-            for col in range(resultMatrix.columns):
-                resultMatrix.matrix[row][col] = self.matrix[row][col] - otherMatrix.matrix[row][col]
-
-        return resultMatrix
-
-    # returns a matrix instance that is a scaled to a scalar
-    def scale(self, scalar):
-        scaled_matrix = Matrix(self.rows, self.columns)
-
+    # returns a Matrix that is the sum of itself and other_matrix
+    def add(self, other_matrix):
+        result_matrix = Matrix(self.rows, self.columns)
         for row in range(self.rows):
             for col in range(self.columns):
-                scaled_matrix.matrix[row][col] = self.matrix[row][col] * scalar
+                result_matrix.data[row][col] = self.data[row][col] + other_matrix.data[row][col]
+        return result_matrix
 
-        return scaled_matrix
-
-    # sets a specific entry in a matrix instance to new_entry. takes a tuple for
-    # entry_position
-    def set_entry(self, entry_position, new_entry):
-        row, col = entry_position
-        self.matrix[row][col] = new_entry
-
-    def get_entry(self, entry_position):
-        row, column = entry_position
-        return self.matrix[row][column]
-
-    # returns a matrix instance that is the product of two matrices
-    def multiply_matrix(self, otherMatrix):
-        resultMatrix = Matrix(self.rows, otherMatrix.columns)
-
+    # returns a Matrix that is the difference of itself and other_matrix
+    def subtract(self, other_matrix):
+        result_matrix = Matrix(self.rows, self.columns)
         for row in range(self.rows):
-            for col in range(otherMatrix.columns):
-                sum = 0
-                for entry in range(len(self.matrix[row])):
-                    product = self.matrix[row][entry] * otherMatrix.getColumn(col)[entry]
-                    sum += product
+            for col in range(self.columns):
+                result_matrix.data[row][col] = self.data[row][col] - other_matrix.data[row][col]
+        return result_matrix
 
-                resultMatrix.set_entry((row, col), sum)
+    def scale(self, scalar):
+        result_matrix = Matrix(self.rows, self.columns)
+        for row in range(self.rows):
+            for col in range(self.columns):
+                result_matrix.data[row][col] = self.data[row][col] * scalar
+        return result_matrix
 
-        return resultMatrix
+    # returns the product of self and other_matrix
+    def multiply(self, other_matrix):
+        result_matrix = Matrix(self.rows, other_matrix.columns)
+        
+        for row in range(self.rows):
+            for col in range(other_matrix.columns):
+                product_sum = 0
+                for entry in range(len(self.data[row])):
+                    product_sum += self.data[row][entry] * other_matrix.get_column(col)[entry]
+                
+                result_matrix.data[row][col] = product_sum
+        
+        return result_matrix
 
-
-    # Takes a tuple (rows, columns) for position. Returns the determinant of
-    # the minor matrix of a position
-    def fetch_minor_matrix(self, position):
-        r, c = position
+    # returns a matrix instance that is the minor of self in relation to position
+    def minor(self, position):
+        result_matrix = Matrix(self.rows - 1, self.columns - 1)
         values = []
 
-        # get values from self.matrix that aren't in the row or column given in position
         for row in range(self.rows):
             for col in range(self.columns):
-                if row != r and col != c:
-                    values.append(self.matrix[row][col])
+                if row != position[0] and col != position[1]:
+                    values.append(self.data[row][col])
 
-        # create minor matrix and fill with values
-        minor = Matrix(self.rows - 1, self.columns - 1)
-        pos = 0
-        for row in range(minor.rows):
-            for col in range(minor.columns):
-                minor.matrix[row][col] = values[pos]
-                pos += 1
+        counter = 0
+        for row in range(result_matrix.rows):
+            for col in range(result_matrix.columns):
+                result_matrix.data[row][col] = values[counter]
+                counter += 1
 
-        return minor.determinant()
+        return result_matrix
 
-
-    # returns the determinant of the matrix instance
+    # returns the determinant of a matrix using laplace expansion
     def determinant(self):
-        rows, cols = self.get_size()
-        if rows == 2 and rows == cols:
-            return self.matrix[0][0] * self.matrix[1][1] - self.matrix[0][1] * self.matrix[1][0]
-
-        result = 0
-        if rows >= 3 and rows == cols:
+        if self.rows == 2:
+            return self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0]
+        
+        result = Fraction(0, 1)
+        
+        if self.rows >= 3:
             for row in range(self.rows):
-                det = self.fetch_minor_matrix((row, 0))
-                if row % 2 == 0:
-                    result += self.matrix[row][0] * det
+                if (row % 2 == 0):
+                    result += self.data[row][0] * self.minor( (row, 0) ).determinant()
                 else:
-                    result += -1 * (self.matrix[row][0] * det)
-
+                    result -= self.data[row][0] * self.minor( (row, 0) ).determinant()
+        
         return result
 
-    # returns the adjugate matrix
-    def get_adjoint_matrix(self):
-        t1 = self
-        # put determinant of all of t1's minor matrices in adj
-        adj = Matrix(self.rows, self.columns)
-        for row in range(m1.rows):
-            for col in range(m1.columns):
-                # if both row and col are even, number is unmodified before input
-                if row % 2 == 0 and col % 2 == 0:
-                    adj.matrix[row][col] = m1.fetch_minor_matrix((row, col))
-                # if both row and col are odd, number is unmodified before input
-                elif row % 2 != 0 and col % 2 != 0:
-                    adj.matrix[row][col] = m1.fetch_minor_matrix((row, col))
-                # if row and col aren't both even or odd, number is multiplied by -1 before input
-                else:
-                    adj.matrix[row][col] = m1.fetch_minor_matrix((row, col)) * -1
-
-        adj = adj.transpose()
-
-        return adj
-
-    # returns the inverse of a matrix. Returns false if there is no inverse
-    def inverse(self):
-        adj = self.get_adjoint_matrix()
-        det = self.determinant()
-        if det != 0:
-            if adj.get_size() != (2, 2):
-                scalar = frac(1, det)
-                # convert all numbers in adj to fractions
-                for row in range(adj.rows):
-                    for col in range(adj.columns):
-                        adj.matrix[row][col] = frac(adj.matrix[row][col])
-                # scale adj to scalar
-                inv = adj.scale(scalar)
-                return inv
-            else:
-                scalar = frac(1, det)
-                # switch (0, 0) and (1, 1), multiply (0, 1) and (1, 0) by -1
-                adj = self
-                values = []
-                for row in range(adj.rows):
-                    for col in range(adj.columns):
-                        values.append(adj.matrix[row][col])
-                adj.matrix[0][0] = values[3]
-                adj.matrix[0][1] = values[1] * -1
-                adj.matrix[1][0] = values[2] * -1
-                adj.matrix[1][1] = values[0]
-                # convert all numbers in adj to fractions
-                for row in range(adj.rows):
-                    for col in range(adj.columns):
-                        adj.matrix[row][col] = frac(adj.matrix[row][col])
-                # scale adj to scalar
-                inv = adj.scale(scalar)
-                return inv
-
-        else:
-            return False
-
-    # converts all entries in matrix to fractions
-    def convert_to_fractions(self):
-        for row in range(self.rows):
-            for col in range(self.columns):
-                self.matrix[row][col] = frac(self.matrix[row][col])
-        return self
-
-    # switches the positions of row1 and row2 in a matrix instance
-    def switch_row(self, row1, row2):
-        r1 = self.matrix[row1]
-        r2 = self.matrix[row2]
-        self.matrix[row1] = r2
-        self.matrix[row2] = r1
-
-    # takes the given row 'row_pos' and subtracts it from all the rows underneath
-    # it in a matrix instance
-    def subtract_down_from_row(self, row_pos):
-        m = self
-        #print self.matrix[row_pos]
-        for row in range(row_pos + 1, self.rows):
-            for entry in range(self.columns):
-                m.matrix[row][entry] = m.matrix[row][entry] - m.matrix[row_pos][entry]
-        return m
-
-    # factors out the column value of a row in a matrix instance. Returns a tuple with
-    # the factored matrix and the factor
-    def factor_row(self, row_pos, col_pos):
-        factored_matrix = self.convert_to_fractions()
-        factor = self.matrix[row_pos][col_pos]
-        print "factor: " + str(factor)
-        for entry in range(self.columns):
-            if factor != 0:
-                factored_matrix.matrix[row_pos][entry] = factored_matrix.matrix[row_pos][entry] / factor
-            else:
-                # find row with a nonzero entry where we are and add that row to the working row
-                pass
-                factored_matrix.matrix[row_pos][entry] = factored_matrix.matrix[row_pos][entry] / factor
-
-        return (factored_matrix, factor)
-
-    # uses factor_row() to factor out the entries of a whole column below the row = to column
-    def factor_column(self, col):
-        factored_column_matrix = self
-        factor = 1
-        for row in range(col, self.rows):
-            factor *= factored_column_matrix.matrix[row][col]
-            factored_column_matrix, _ = factored_column_matrix.factor_row(row, col)
-
-        return (factored_column_matrix, factor)
-
-    def determinant_row_reduction(self):
-        echelon_matrix = self
-        multiplier = 1
-
-        for col in range(echelon_matrix.columns):
-            echelon_matrix, factor = echelon_matrix.factor_column(col)
-            multiplier *= factor
-            echelon_matrix = echelon_matrix.subtract_down_from_row(col)
-
-        print "\nDeterminant: " + str(multiplier)
-        echelon_matrix.show_self()
-
-
-### TG
+#--------------------------------------------------------------------------------
 
 m1 = Matrix(3, 3)
 m1.randomize()
-print "Matrix:\n"
 m1.show_self()
-print "\nDeterminant:\n"
-print m1.determinant()
-print "\n---\n"
-m1.determinant_row_reduction()
+print("determinant: " + str(m1.determinant()))
 
-
-print "\n"
-
-
-# factored_matrix, factor = m1.factor_row(1, 1)
-# factored_matrix.show_self()
-# print "factor: " + str(factor)
-
-
-
-# start = datetime.datetime.now()
-# det = m1.determinant()
-# end = datetime.datetime.now()
-# time = end - start
-# print "determinant: " + str(det)
-# print "time elapsed (ms): " + str(time.total_seconds() * 1000)
