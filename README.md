@@ -2,34 +2,6 @@
 
 For learning python, linear algebra, and git all in one go!
 
-### To do:
-- **Matrix Constructor**
-    - [x] Construct zero matrix
-    - [x] Construct identity matrix
-    - [ ] Create matrix with specific entries
-      - [x] Set specific entry
-- **Matrix Operations**
-  - [x] Randomize matrix entries
-  - [x] Matrix addition
-  - [x] Matrix subtraction
-  - [x] Scalar multiplication
-  - [x] Matrix multiplication
-  - [x] Transpose operation
-  - [x] Matrix inversion
-  - [x] Adjoint calculation
-  - [x] Determinant calculation
-- **Vector Operations**
-  - [ ] Norm (length) calculation for vectors
-  - [ ] Unit vectors
-  - [ ] Dot product
-- **Special methods**
-  - [x] Matrix addition
-  - [x] Matrix subtraction
-  - [x] Matrix multiplication
-- **Unit tests**
-  - [ ] Matrix Operations
-  - [ ] Vector Operations
-
 ## Usage
 
 ### Creating a matrix instance using the *Matrix()* class
@@ -67,24 +39,6 @@ matrix = Matrix(3, 3)
 matrix.randomize()
 ```
 
-#### .set_entry()
-Sets a specified entry in the matrix to the given number. First parameter is a tuple containing the position of the entry to be changed. Second parameter is the value you want to change that entry to.
-
-```python
-# create matrix
-matrix = Matrix(3, 3)
-# set entry on row 0, column 0 to 10
-matrix.set_entry((0, 0), 10)
-```
-
-#### .get_size()
-Returns a tuple with the amount of rows and columns in the matrix instance.
-
-```python
-matrix = Matrix(4, 2)
-matrix.get_size()
-```
-
 #### .transpose()
 Returns a matrix instance that is the transpose of the original matrix. Used as a helper function by *.get_adjoint_matrix()*
 
@@ -93,7 +47,7 @@ matrix = Matrix(3, 2)
 matrix.transpose()
 ```
 
-#### .add_matrix(second_matrix)
+#### .add(second_matrix)
 Returns a matrix instance that is the sum of self with second_matrix. Raises an exception if matrices are of different sizes.
 
 ```python
@@ -103,7 +57,7 @@ matrix1.randomize()
 matrix2 = Matrix(2, 2)
 matrix2.randomize()
 # matrix1 + matrix2
-sum_of_matrices = matrix1.add_matrix(matrix2)
+sum_of_matrices = matrix1.add(matrix2)
 ```
 
 The addition operator ``+`` can also be used.
@@ -118,7 +72,7 @@ matrix2.randomize()
 sum_of_matrices = matrix1 + matrix2
 ```
 
-#### .subtract_matrix(second_matrix)
+#### .subtract(second_matrix)
 Returns a matrix instance that is the difference of self with second_matrix. Raises an exception if matrices are of different sizes.
 
 ```python
@@ -128,7 +82,7 @@ matrix1.randomize()
 matrix2 = Matrix(2, 2)
 matrix2.randomize()
 # matrix1 - matrix2
-difference_of_matrices = matrix1.subtract_matrix(matrix2)
+difference_of_matrices = matrix1.subtract(matrix2)
 ```
 
 The subtraction operator ``-`` can also be used.
@@ -143,7 +97,7 @@ matrix2.randomize()
 difference_of_matrices = matrix1 - matrix2
 ```
 
-#### .multiply_matrix(second_matrix)
+#### .multiply(second_matrix)
 Returns a matrix instance that is the difference of self with second_matrix. Raises an exception if matrices are of different sizes.
 
 ```python
@@ -179,7 +133,7 @@ scaled_matrix = matrix1.scale(2)
 ```
 
 #### .determinant()
-Returns the determinant of the matrix using cofactor expansion. Complexity is O(n!) so it gets very slow very quickly as the matrix grows. Uses *.fetch_minor_matrix()* as a helper function.
+Returns the determinant of the matrix using laplace expansion. Complexity is O(n!) so it gets very slow very quickly as the matrix grows. Uses `.minor()` as a helper function
 
 ```python
 # create matrix
@@ -189,27 +143,6 @@ matrix1.randomize()
 determinant_of_matrix1 = matrix1.determinant()
 ```
 
-#### .fetch_minor_matrix()
-Helper function for *.determinant()* and *.get_adjoint_matrix()*. Fetches the minor matrices of the original matrix and returns their determinants.
+#### .minor( (row, col) )
+Helper function for `.determinant()`. Returns the minor matrix 
 
-#### .get_adjoint_matrix()
-Returns the adjoint of the matrix. Uses *.fetch_minor_matrix()* and *.transpose()* as helper functions.
-
-```python
-# create matrix
-matrix1 = Matrix(4, 4)
-matrix1.randomize()
-# calculate the adjoint
-adjoint_of_matrix1 = matrix1.get_adjoint_matrix()
-```
-
-#### .inverse()
-Returns a matrix instance that is the inverse of the original matrix if its determinant is nonzero. Else, it returns False. Uses *.determinant()*, *.get_adjoint_matrix()* and *.scale()* as helper functions. Calls *.determinant()* many times so gets very slow very quickly as the matrix grows.
-
-```python
-# create matrix
-matrix1 = Matrix(4, 4)
-matrix1.randomize()
-# calculate the inverse
-inverse_of_matrix1 = matrix1.inverse()
-```

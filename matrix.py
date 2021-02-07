@@ -13,6 +13,15 @@ class Matrix:
             for _ in range(self.columns):
                 self.data[row].append(Fraction(0, 1))
 
+    def __add__(self, other_matrix):
+        return self.add(other_matrix)
+    
+    def __sub__(self, other_matrix):
+        return self.subtract(other_matrix)
+
+    def __mul__(self, other_matrix):
+        return self.multiply(other_matrix)
+
     # prints the matrix to the console. Converts each fraction to a string representation when needed
     def show_self(self):
         string_matrix = Matrix(self.rows, self.columns)
@@ -127,5 +136,11 @@ class Matrix:
 m1 = Matrix(3, 3)
 m1.randomize()
 m1.show_self()
-print("determinant: " + str(m1.determinant()))
+print("+")
+m2 = Matrix(3, 3)
+m2.randomize()
+m2.show_self()
+print("=");
+m3 = m1 + m2
+m3.show_self()
 
