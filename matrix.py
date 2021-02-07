@@ -53,7 +53,7 @@ class Matrix:
             for col in range(self.columns):
                 strmat.matrix[row][col] = str(self.matrix[row][col])
         for row in strmat.matrix:
-            print row
+            print(row)
 
 
     # returns a tuple that contains the size of the matrix instance (rows, columns)
@@ -310,7 +310,7 @@ class Matrix:
             multiplier *= factor
             echelon_matrix = echelon_matrix.subtract_down_from_row(col)
 
-        print "\nDeterminant: " + str(multiplier)
+        print("\nDeterminant: " + str(multiplier))
         #echelon_matrix.show_self()
 
 
