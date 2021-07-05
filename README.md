@@ -1,6 +1,6 @@
 # Pymatrix
 
-For learning python, linear algebra, and git all in one go!
+For learning python, linear algebra, and git!
 
 ## Usage
 
