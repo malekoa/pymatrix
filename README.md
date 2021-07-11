@@ -1,6 +1,6 @@
 # Pymatrix
 
-For learning python, linear algebra, and git!
+Basic linear algebra operation using python.
 
 ## Usage
 
